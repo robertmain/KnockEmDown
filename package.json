@@ -1,6 +1,6 @@
 {
 	"name": "KnockEmDown",
-	"version": "0.0.0",
+	"version": "1.0.0",
 	"description": "A web based slide deck written in Node.JS",
 	"main": "server.js",
 	"dependencies": {
