@@ -1,0 +1,26 @@
+{
+	"name": "KnockEmDown",
+	"version": "0.0.0",
+	"description": "A web based slide deck written in Node.JS",
+	"main": "server.js",
+	"dependencies": {
+		"express": "latest",
+		"consolidate": "latest",
+		"markdown": "latest",
+		"socket.io": "latest",
+		"just": "latest"
+	},
+	"scripts": {
+	  "test": "echo \"Error: no test specified\" && exit 1",
+	  "start": "node server.js"
+	},
+	"repository": {
+	  "type": "git",
+	  "url": "https://github.com/robertmain/KnockEmDown"
+	},
+	"author": "",
+	"license": "BSD-2-Clause",
+	"bugs": {
+	  "url": "https://github.com/robertmain/KnockEmDown/issues"
+	}
+}

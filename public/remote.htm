@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title><%= name %> | Presenter Remote</title>
+		<script src="/socket.io/socket.io.js"></script>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+		<link href="css/bootstrap.theme.min.css" rel="stylesheet" media="screen">
+		<link href="css/remote.css" rel="stylesheet" media="screen">
+		<script src="js/jquery-2.0.3.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<script>
+			var socket = io.connect();
+		</script>
+	</head>
+
+	<body>
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-12">
+					<h1><%= name %> <small>Presenter Remote</small></h1>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-6">
+					<button class="btn btn-lg btn-warning col-xs-12" data-action="previous">Previous</button>
+				</div>
+				<div class="col-xs-6">
+					<button class="btn btn-lg btn-success col-xs-12" data-action="next">Next</button>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12">
+					<p class="text-center slide-indicator">Slide <span class="current-slide"></span> of <span class="total-slides"></span></p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12">
+					<button class="btn btn-inverse btn-lg col-xs-12" data-action="blackout">Blackout</button>
+				</div>
+			</div>
+		</div>
+		<script>
+			$('button').click(function(){
+				var action = $(this).attr('data-action');
+				if(action == 'next'){
+					socket.emit('next_from_remote', {});
+				}
+				else if(action == 'previous'){
+					socket.emit('previous_from_remote', {});
+				}
+				else if(action == 'blackout'){
+					socket.emit('toggle_blackout_from_remote', {});
+				}
+			});
+			$(document).keyup(function(e){
+				var code = (e.keyCode ? e.keyCode : e.which);
+				
+				//Blackout
+ 				if(code == 66){
+					socket.emit('toggle_blackout_from_remote');
+				}
+				
+				//Next Slide
+				else if(code == 39){
+					socket.emit('next_from_remote');
+				}
+
+				//Previous Slide
+				else if(code == 37){
+					socket.emit('previous_from_remote');
+				}
+
+			});
+			socket.on('slide_change_to_remote', function(data){
+				$('.current-slide').text(data.to+1);
+				$('.total-slides').text(data.total);
+			});
+		</script>
+	</body>
+</html>
