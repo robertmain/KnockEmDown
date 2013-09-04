@@ -31,14 +31,12 @@
 		<p class="deck-status"><%= packageFile.name %> v<%= packageFile.version %></p>
 		<!-- End extension snippets. -->
 
-
 		<!-- Required JS files. -->
 		<script src="js/jquery-2.0.3.min.js"></script>
 		<script src="js/deck.js/core/deck.core.js"></script>
 
 		<!-- Extension JS files. Add or remove as needed. -->
 		<script src="js/deck.js/core/deck.core.js"></script>
-		<script src="js/deck.js/extensions/hash/deck.hash.js"></script>
 		<script src="js/deck.js/extensions/menu/deck.menu.js"></script>
 		<script src="js/deck.js/extensions/goto/deck.goto.js"></script>
 		<script src="js/deck.js/extensions/status/deck.status.js"></script>
@@ -46,30 +44,23 @@
 		<script src="js/deck.js/extensions/scale/deck.scale.js"></script>
 
 		<script>
-			//Initialize the deck. You can put this in an external file if desired.
 			$(function() {
 				$.deck.defaults.keys.next = [];
 				$.deck.defaults.keys.previous = [];
 				$.deck('.slide');
 			});
-			$(document).bind('deck.change', function(event, from, to) {
-				socket.emit('slide_change', {from: from, to: to, total: $.deck('getSlides').length});
-			});
 			var socket = io.connect();
-			var blackout = 0;
-			socket.on('next_slide', function() {
-				if(!blackout){
-					$.deck('next');
+			socket.on('state', function(state) {
+				// if(!state.blackout){
+				// 	$.deck('go', state.currentSlide);
+				// }
+				if(state.blackout){
+					$('.overlay').fadeIn('slow');
 				}
-			});
-			socket.on('previous_slide', function() {
-				if(!blackout){
-					$.deck('prev');
+				else{
+					$('.overlay').fadeOut('slow');
+					$.deck('go', state.currentSlide);
 				}
-			});
-			socket.on('toggle_blackout', function(){
-				$('.overlay').fadeToggle("slow");
-				blackout ^= true;
 			});
 		</script>
 	</body>

@@ -1,6 +1,5 @@
 var express = require('express'),
 	cons = require('consolidate'),
-	markdown = require('markdown').markdown,
 	config = require('./config/config.js'),
 	app = express(),
 	fs = require('fs'),
@@ -10,6 +9,13 @@ var express = require('express'),
 	marked = require('marked');
 
 var state = {};
+state.currentSlide = 0;
+state.blackout = 0;
+var markdownArray = fs.readFileSync('slides.md', {encoding: "utf8"}).split("\n\n\n");
+var parsedSlides = [];
+markdownArray.forEach(function(val, idx){
+	parsedSlides.push(marked(val));
+});
 
 marked.setOptions({
 	gfm: true,
@@ -30,19 +36,29 @@ marked.setOptions({
 io.sockets.on('connection', function(socket){
 	io.sockets.emit('state', state);
 	socket.on('next_from_remote', function(){
-		socket.broadcast.emit('next_slide');
+		if(!state.blackout){
+			if(state.currentSlide < parsedSlides.length-1){
+				state.currentSlide ++;
+				io.sockets.emit('state', state);
+			}
+		}	
 	});
 	socket.on('previous_from_remote', function(){
-		socket.broadcast.emit('previous_slide');
+		if(!state.blackout){			
+			if(state.currentSlide > 0){
+				state.currentSlide --;
+				io.sockets.emit('state', state);
+			}
+		}
 	});
 	socket.on('toggle_blackout_from_remote', function(){
-		socket.broadcast.emit('toggle_blackout');
-	});
-	socket.on('slide_change', function(data){
-		state.to = data.to;
-		state.from = data.from;
-		state.total_slides = data.total_slides;
-		socket.broadcast.emit('slide_change_to_remote', data);
+		if(state.blackout){
+			state.blackout = 0;
+		}
+		else{
+			state.blackout = 1;
+		}
+		io.sockets.emit('state', state);
 	});
 });
 
@@ -55,19 +71,16 @@ app.configure(function() {
 
 app.get("/", function(req, res) {
 	var data = {};
-	var markdownArray = fs.readFileSync('slides.md', {encoding: "utf8"}).split("\n\n\n");
-	var markupArray = [];
-	for(index in markdownArray){
-		markupArray.push(marked(markdownArray[index]));
-	}
-	data.state = state;
-	data.parsedSlides = markupArray;
+	data.parsedSlides = parsedSlides;
 	data.packageFile = packageFile;
 	res.render("slides", data);
 });
 
 app.get("/remote", function(req, res){
-	res.render('remote', packageFile);
+	var data = {};
+	data.packageFile = packageFile;
+	data.parsedSlides = parsedSlides;
+	res.render('remote', data);
 });
 
 server.listen(config.webserver.port);

@@ -6,7 +6,7 @@
 	"dependencies": {
 		"express": "latest",
 		"consolidate": "latest",
-		"markdown": "latest",
+		"marked": "latest",
 		"socket.io": "latest",
 		"just": "latest"
 	},

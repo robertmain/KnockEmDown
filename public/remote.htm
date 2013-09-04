@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title><%= name %> | Presenter Remote</title>
+		<title><%= packageFile.name %> | Presenter Remote</title>
 		<script src="/socket.io/socket.io.js"></script>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		 <meta content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
 		<link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
 		<link href="css/bootstrap.theme.min.css" rel="stylesheet" media="screen">
 		<link href="css/remote.css" rel="stylesheet" media="screen">
@@ -15,10 +15,37 @@
 	</head>
 
 	<body>
+		<nav class="navbar navbar-inverse navbar-default navbar-fixed-top" role="navigation">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<p class="navbar-brand" href="#"><%= packageFile.name %></p>
+			</div>
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<form class="navbar-form navbar-left" role="search">
+					<div class="input-group">
+						<input type="number" class="form-control">
+						<span class="input-group-btn">
+							<button class="btn">GO</button>
+						</span>
+					</div>
+				</form>
+			</div>
+		</nav>
 		<div class="container">
 			<div class="row">
 				<div class="col-xs-12">
-					<h1><%= name %> <small>Presenter Remote</small></h1>
+					<button class="btn btn-inverse btn-lg col-xs-12" data-action="blackout">Blackout</button>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12">
+					<p class="text-center slide-indicator">Slide <span class="current-slide"></span> of <%= parsedSlides.length %></p>
 				</div>
 			</div>
 			<div class="row">
@@ -29,52 +56,37 @@
 					<button class="btn btn-lg btn-success col-xs-12" data-action="next">Next</button>
 				</div>
 			</div>
-			<div class="row">
-				<div class="col-xs-12">
-					<p class="text-center slide-indicator">Slide <span class="current-slide"></span> of <span class="total-slides"></span></p>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-xs-12">
-					<button class="btn btn-inverse btn-lg col-xs-12" data-action="blackout">Blackout</button>
-				</div>
-			</div>
 		</div>
 		<script>
 			$('button').click(function(){
 				var action = $(this).attr('data-action');
 				if(action == 'next'){
-					socket.emit('next_from_remote', {});
+					socket.emit('next_from_remote');
 				}
 				else if(action == 'previous'){
-					socket.emit('previous_from_remote', {});
+					socket.emit('previous_from_remote');
 				}
 				else if(action == 'blackout'){
-					socket.emit('toggle_blackout_from_remote', {});
+					socket.emit('toggle_blackout_from_remote');
 				}
 			});
 			$(document).keyup(function(e){
-				var code = (e.keyCode ? e.keyCode : e.which);
-				
+				var code = (e.keyCode ? e.keyCode : e.which);				
 				//Blackout
  				if(code == 66){
 					socket.emit('toggle_blackout_from_remote');
 				}
-				
 				//Next Slide
 				else if(code == 39){
 					socket.emit('next_from_remote');
 				}
-
 				//Previous Slide
 				else if(code == 37){
 					socket.emit('previous_from_remote');
 				}
-
 			});
-			socket.on('slide_change_to_remote', function(data){
-				$('.current-slide').text(data.to+1);
-				$('.total-slides').text(data.total);
+			socket.on('state', function(state){
+				$('span.current-slide').text(state.currentSlide+1);
 			});
 		</script>
 	</body>
