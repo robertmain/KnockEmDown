@@ -60,6 +60,10 @@ io.sockets.on('connection', function(socket){
 		}
 		io.sockets.emit('state', state);
 	});
+	socket.on('goto_slide_from_remote', function(slideNumber){
+		state.currentSlide = slideNumber;
+		io.sockets.emit('state', state);
+	});
 });
 
 app.configure(function() {
