@@ -1,0 +1,39 @@
+@import'./bootstrap.min.css';
+
+*{
+	box-sizing: border-box!important;
+}
+
+body{
+	line-height: 2em;
+	font-size: 1.5em;
+	color: #575757;
+}
+
+.page-header{
+	overflow: hidden;
+}
+
+.deck-container{
+	/*width: 1024px;*/
+	height: 768px!important;
+	-webkit-transform: scale(0.6351);
+	-webkit-transform-origin: 0 0;
+	-moz-transform: scale(0.6351);
+	-moz-transform-origin: 0 0;
+	-ms-transform: scale(0.6351);
+	-ms-transform-origin: 0 0;
+	box-shadow: 5px 5px 10px #AAA;
+	background-attachment: scroll;*/
+}
+
+.deck-container .slide{
+/*	-webkit-transform: scale(0.9);
+	-webkit-transform-origin: 0 0;
+	-moz-transform: scale(0.9);
+	-moz-transform-origin: 0 0;*/
+}
+
+.page-header{
+	margin: 10px 0px;
+}

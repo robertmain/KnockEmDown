@@ -8,7 +8,9 @@
 		"consolidate": "latest",
 		"marked": "latest",
 		"socket.io": "latest",
-		"just": "latest"
+		"just": "latest",
+		"address": "latest",
+		"qrcode-terminal": "latest"
 	},
 	"scripts": {
 	  "test": "echo \"Error: no test specified\" && exit 1",

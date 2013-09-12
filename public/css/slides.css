@@ -1,0 +1,4 @@
+@import '../fonts/fonts.css';
+.slide aside.notes{
+	display: none;
+}

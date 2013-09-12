@@ -1,21 +1,41 @@
+#Node.JS
+###Presented By Robert Main
+
+
 ##To Do
 1. Server.JS:
-  1. <strike>Find some way to manage and share state between views</strike>
-  1. <strike>Push state on connection</strike>
   1. Accept pin code from audience view(set by pressing a shortkey and typing the code in)
 
 1. Presenter Remote:
-	1. <strike>Recieve state and current slide on connection</strike>
 	1. Ask for pin before connection
-	1. <strike>Dropdown bar for jump to slide navigation</strike>
+	1. Reload slides button
 
 1. Presenter/Notes View:
-	1. Start Building It
+	1. Get speaker notes working with markdown
+	1. Show upcoming slide(s)
+	1. Show connected remote(s)
 
 1. Presentation View
-	1. <strike>Ask Stewart about reciving the slides via template engine vs recieving them via node in presenter view</strike>
 	1. Build a nicer looking template
 
+1. Overall
+	1. Read theme location from config file
 
-##Another Slide
-<h3>Hello world</h3>
+<aside class="notes">
+	<ul>
+		<li>Bullet for speaker notes</li>
+		<li>Another Bullet for speaker notes</li>
+		<li>Yet Another Bullet for speaker notes</li>
+		<li>Bullet all the things!</li>
+		<li>Poo</li>
+	</ul>
+</aside>
+
+
+
+##Making An HTTP Server
+```language-javascript
+http.createServer(function(req, res){
+	res.writeHead(200, {"Content-Type": "text/plain"});
+}).listen(8000);
+```

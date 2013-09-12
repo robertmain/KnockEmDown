@@ -9,14 +9,15 @@ var express = require('express'),
 	marked = require('marked');
 
 var state = {};
-state.currentSlide = 0;
-state.blackout = 0;
-var markdownArray = fs.readFileSync('slides.md', {encoding: "utf8"}).split("\n\n\n");
+state.currentSlide = 0, state.blackout = 0;
+console.log("Parsing Slides...");
+var markdownArray = fs.readFileSync(config.presentation.slides_file, {encoding: "utf8"}).split("\n\n\n");
 var parsedSlides = [];
 markdownArray.forEach(function(val, idx){
 	parsedSlides.push(marked(val));
 });
-
+state.clients = {}; //Use socket.set for this..
+console.log("Slides Parsed!");
 marked.setOptions({
 	gfm: true,
 	tables: true,
@@ -61,8 +62,10 @@ io.sockets.on('connection', function(socket){
 		io.sockets.emit('state', state);
 	});
 	socket.on('goto_slide_from_remote', function(slideNumber){
-		state.currentSlide = slideNumber;
-		io.sockets.emit('state', state);
+		if((slideNumber > 0) && (slideNumber < parsedSlides.length)){
+			state.currentSlide = slideNumber;
+			io.sockets.emit('state', state);
+		}
 	});
 });
 
@@ -77,6 +80,7 @@ app.get("/", function(req, res) {
 	var data = {};
 	data.parsedSlides = parsedSlides;
 	data.packageFile = packageFile;
+	data.config = config;
 	res.render("slides", data);
 });
 
@@ -87,5 +91,13 @@ app.get("/remote", function(req, res){
 	res.render('remote', data);
 });
 
+app.get("/notes", function(req, res){
+	var data = {};
+	data.packageFile = packageFile;
+	data.parsedSlides = parsedSlides;
+	data.config = config;
+	res.render('notes', data);
+});
+
 server.listen(config.webserver.port);
-console.log("Slide Server Now Running On " + config.webserver.ip + ":" + config.webserver.port + "...");
+console.log(packageFile.name + " Server Now Running On " + config.webserver.ip + ":" + config.webserver.port + "...");
