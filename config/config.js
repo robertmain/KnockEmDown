@@ -3,7 +3,7 @@ module.exports = exports = self = {};
 
 self.webserver = {
 	"ip": "0.0.0.0",
-	"port": "8000"
+	"port": process.argv[2] || "8000"
 };
 
 self.presentation = {

@@ -99,5 +99,9 @@ app.get("/notes", function(req, res){
 	res.render('notes', data);
 });
 
+app.get("/template", function(req, res){
+	res.render('slide_template');
+});
+
 server.listen(config.webserver.port);
 console.log(packageFile.name + " Server Now Running On " + config.webserver.ip + ":" + config.webserver.port + "...");

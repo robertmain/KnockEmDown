@@ -1,4 +1,52 @@
+@import 'base.css';
 @import '../fonts/fonts.css';
-.slide aside.notes{
-	display: none;
+*{
+	margin: 0px;
+	padding: 0px;
+}
+
+body{
+	background-color: #000;
+}
+
+h2{
+	color: #515151;
+	font-size: 45px;
+	line-height: 45px;
+	letter-spacing: -2px;
+	font-weight: 600;
+	margin-bottom: 20px;
+}
+
+.slides > .slide{
+	display: block;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	height: 700px;
+	width: 1100px;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	margin-top: -350px;
+	background-color: #FFF;
+	margin-left: -550px;
+	font-family: "OpenSansRegular";
+	padding: 40px 60px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	color: #797979;
+	font-size: 26px;
+}
+
+ul li:before{
+	conent: '\00B7';
+	margin-left: '-1em';
+	position: absolute;
+	font-weight: 600;
+}
+
+.slides > .slide ul{
+	margin-left: 1.2em;
+	margin-bottom: 1.2em;
+	list-style: none;
 }
