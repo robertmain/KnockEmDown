@@ -15,9 +15,7 @@ self.webserver = {
 self.presentation = {
 	/* Use this to tell KnockEmDown where to find your themes */
 	"theme": "knockemdown",
-	/* /User configurable stuff */
-
-	/* You should not need to touch anything in here, you were warned... */
-	"theme_directory": "./themes"
-	/* You should not need to touch anything in here, you were warned... */
+	"theme_directory": "./themes",
+	"transition": "none",
+	"control_password": "1234"
 };

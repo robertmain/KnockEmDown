@@ -1,7 +1,79 @@
 <!DOCTYPE html>
 <html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=1024, user-scalable=no">
+		<title>{{ packageFile.name }} v{{ packageFile.version }}</title>
+		<link rel="stylesheet" href="{{ config.presentation.theme_directory }}/{{ config.presentation.theme }}/style.css" />
+		<link rel="stylesheet" href="css/transitions/{{ config.presentation.transition }}.css" />
+		<style type="text/css">
+			html, body { 
+				width: 100%;
+				height: 100%;
+				overflow: hidden;
+			} 
+			.slide {
+				display: block;
+				width: 100%; 
+				height: 100%;
+				position:absolute;
+				top: 0px;
+				left: 0px;
+			}
+		</style>
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+		<script src="/socket.io/socket.io.js"></script>
+		<script type="text/javascript">
+			var state = {
+				"numSlides": 0,
+				"currentSlide": 1,
+				"blackout": false,
+			};
+			function updateSlides(){
+				var slides = $(".slide");
+				slides.removeClass("slide-before slide-prev slide-current slide-next slide-after");
+				
+				slides.filter(":lt("+(state.currentSlide-2)+")").addClass("slide-before");
+				slides.filter(":eq("+(state.currentSlide-2)+")").addClass("slide-prev");
+				slides.filter(":eq("+(state.currentSlide-1)+")").addClass("slide-current");
+				slides.filter(":eq("+(state.currentSlide)+")").addClass("slide-next");
+				slides.filter(":gt("+(state.currentSlide)+")").addClass("slide-after");
+				
+				$(".overlay").css("display",state.blackout?"block":"none");
+			}
+		
+			$(document).ready(function(){
+				state.numSlides = $(".slide").size();
+				updateSlides();
+				setTimeout(function(){$(".slide").addClass("slide-transition");},1);
+			});
+			
+			$(document).keydown(function(e){
+				var code = (e.keyCode ? e.keyCode : e.which);				
+				//Next Slide
+				if(code == 39){
+					if(state.currentSlide < state.numSlides){
+						state.currentSlide++;
+						updateSlides();
+					}
+					e.preventDefault();
+					e.stopPropagation();
+				}
+				//Previous Slide
+				else if(code == 37){
+					if(state.currentSlide > 1){
+						state.currentSlide--;
+						updateSlides();
+					}
+					e.preventDefault();
+					e.stopPropagation();
+				}
+			});
+		</script>
+	</head>
 	<body>
-		<h1>Deck</h1>
+		<div class="overlay" style="background-color: #000; width: 100%; height: 100%; z-index: 2000; position: absolute; margin: 0px; left: 0px; top: 0px; display: none"></div>
 		{{#each slides}}
 			{{{.}}}
 		{{/each}}

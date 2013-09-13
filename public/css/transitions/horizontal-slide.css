@@ -1,0 +1,4 @@
+@import './none.css';
+.slide-transition {
+	transition: transform 1s;
+}
