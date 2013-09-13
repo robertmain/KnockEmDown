@@ -9,7 +9,8 @@
     "handlebars-layouts": "~0.1.1",
     "handlebars": "~1.0.12",
     "express": "~3.4.0",
-    "socket.io": "~0.9.16"
+    "socket.io": "~0.9.16",
+    "jsdom-nogyp": "~0.8.3"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
