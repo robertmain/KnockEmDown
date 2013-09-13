@@ -35,3 +35,10 @@ require("./lib/slide-reader.js")(config.directories.slides, function(slides){
 	server.listen(config.webserver.port);
 	console.log(packageFile.name + " Server Now Running On " + config.webserver.ip + ":" + config.webserver.port + "...");
 });
+
+app.get("/template", function(req, res){
+	res.render('slide_template');
+});
+
+server.listen(config.webserver.port);
+console.log(packageFile.name + " Server Now Running On " + config.webserver.ip + ":" + config.webserver.port + "...");
