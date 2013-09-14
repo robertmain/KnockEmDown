@@ -8,11 +8,65 @@
 		<script src="js/jquery-2.0.3.min.js"></script>
 		<script src="js/bootstrap.min.js"></script>
 		<script>
-			var socket = io.connect();
+			var socket;
+			setTimeout(function(){
+				socket = io.connect();
+				socket.on('auth_challenge', function(){
+					$('.splash').addClass('hide');
+					$('.pincode').removeClass('hide');
+					$('.remote').addClass('hide');
+				});
+
+				socket.on('auth_success', function(){
+					$('.splash').addClass('hide');
+					$('.pincode').removeClass('hide');
+					$('.remote').addClass('hide');
+
+					$(document).keyup(function(e){
+						var code = (e.keyCode ? e.keyCode : e.which);				
+						//Blackout
+		 				if(code == 66){
+							socket.emit('toggle_blackout');
+						}
+						//Next Slide
+						else if(code == 39){
+							socket.emit('next_slide');
+						}
+						//Previous Slide
+						else if(code == 37){
+							socket.emit('prev_slide');
+						}
+					});
+				});
+
+				socket.on('auth_fail', function(){
+					$('.splash').addClass('hide');
+					$('.remote').addClass('hide');
+					$('.pincode').removeClass('hide');
+					
+					//Go to pin screen [done]
+					//Display error [in progress]
+					//Hit Stewart [pending]
+				});
+
+				socket.on('state', function(state){
+					$('span.current-slide').text(state.currentSlide);
+					if(state.blackout){
+						$('.btn-inverse').addClass('active');
+					}
+					else{
+						$('.btn-inverse').removeClass('active');
+					}
+				});
+
+			}, 500);
 		</script>
 	</head>
 
 	<body>
+		<div class="splash">
+			<h1>LOADING</h1>
+		</div>
 		<div class="remote hide">
 			<nav class="navbar navbar-inverse navbar-default navbar-fixed-top" role="navigation">
 				<div class="navbar-header">
@@ -55,61 +109,44 @@
 				</div>
 			</div>
 		</div>
-		<div class="pincode">
+		<div class="pincode hide">
 			<h2>Authentication Required</h2>
 			<form>
 				<div class="form-group">
 					<input type="text" class="form-control input-lg" placeholder="Presentation Pin" />
 				</div>
 				<div class="form-group">
-					<button type="button" class="btn btn-primary btn-lg btn-block">Submit Pin</button>
+					<button type="button" id="pincode-btn" class="btn btn-primary btn-lg btn-block">Submit Pin</button>
 				</div>
 			</form>
 		</div>
 		<script>
-			$('button').click(function(){
-				var action = $(this).attr('data-action');
-				if(action == 'next'){
-					socket.emit('next_slide');
-				}
-				else if(action == 'previous'){
-					socket.emit('prev_slide');
-				}
-				else if(action == 'blackout'){
-					socket.emit('toggle_blackout');
-				}
+			$('button[data-action="next"]').click(function(){
+				socket.emit('next_slide');
 			});
-			$(document).keyup(function(e){
-				var code = (e.keyCode ? e.keyCode : e.which);				
-				//Blackout
- 				if(code == 66){
-					socket.emit('toggle_blackout');
-				}
-				//Next Slide
-				else if(code == 39){
-					socket.emit('next_slide');
-				}
-				//Previous Slide
-				else if(code == 37){
-					socket.emit('prev_slide');
-				}
+
+			$('button[data-action="previous"]').click(function(){
+				socket.emit('prev_slide');
 			});
-			socket.on('state', function(state){
-				$('span.current-slide').text(state.currentSlide);
-				if(state.blackout){
-					$('.btn-inverse').addClass('active');
-				}
-				else{
-					$('.btn-inverse').removeClass('active');
-				}
+
+			$('button[data-action="blackout"]').click(function(){
+				socket.emit('toggle_blackout');
 			});
+
 			$('form').click(function(event){
 				return false;
 			});
+
 			$('button.slide-jump-button').click(function(event){
 				socket.emit('goto_slide', parseInt($('.slide-jump-input').val()));
 				$('.slide-jump-input').val("");
 				event.preventDefault();
+			});
+
+			$('#pincode-btn').click(function(){
+				if($('#pincode-field')){
+					socket.emit('auth', {'password': $('#pincode-field').val()});
+				}
 			});
 		</script>
 	</body>

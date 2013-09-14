@@ -1,6 +1,5 @@
 var self
 module.exports = exports = self = {};
-
 /* These are relative to the app root */
 self.directories = {
 	"slides": "./slides",
