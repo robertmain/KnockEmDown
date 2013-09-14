@@ -25,6 +25,7 @@
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 		<script src="/socket.io/socket.io.js"></script>
 		<script type="text/javascript">
+		
 			var state = {
 				"numSlides": 0,
 				"currentSlide": 1,
@@ -47,29 +48,44 @@
 				state.numSlides = $(".slide").size();
 				updateSlides();
 				setTimeout(function(){$(".slide").addClass("slide-transition");},1);
+				var socket = io.connect();
+				socket.on("state",function(newState){
+					state = newState;
+					updateSlides();
+				});
+				socket.on("auth_success",function(){
+					$(document).keydown(function(e){
+						//Next Slide
+						if(e.which == 39){
+							socket.emit("next_slide",{});
+							e.preventDefault();
+							e.stopPropagation();
+						}
+						//Previous Slide
+						else if(e.which == 37){
+							socket.emit("prev_slide",{});
+							e.preventDefault();
+							e.stopPropagation();
+						}
+						//Toggle Blackout
+						else if(e.which == 66){
+							socket.emit("toggle_blackout",{});
+							e.preventDefault();
+							e.stopPropagation();
+						}
+					});
+				});
+				socket.on("auth_challenge",function(){
+					alert("Unhandled auth_challenge event, using hardcoded password for now");
+					socket.emit("auth",{"password": "1234"});
+				});
+				socket.on("auth_fail",function(){
+					alert("Unhandled auth_fail event");
+				});
 			});
+			/*
 			
-			$(document).keydown(function(e){
-				var code = (e.keyCode ? e.keyCode : e.which);				
-				//Next Slide
-				if(code == 39){
-					if(state.currentSlide < state.numSlides){
-						state.currentSlide++;
-						updateSlides();
-					}
-					e.preventDefault();
-					e.stopPropagation();
-				}
-				//Previous Slide
-				else if(code == 37){
-					if(state.currentSlide > 1){
-						state.currentSlide--;
-						updateSlides();
-					}
-					e.preventDefault();
-					e.stopPropagation();
-				}
-			});
+			*/
 		</script>
 	</head>
 	<body>
