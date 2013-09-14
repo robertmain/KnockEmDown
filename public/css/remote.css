@@ -3,7 +3,6 @@
 body{
 	color: #F5F5F5;
 	background-color: #000;
-  padding-top: 80px
 }
 
 .btn-lg{
@@ -50,4 +49,8 @@ body{
 
 .slide-indicator{
 	font-size: 3em;
+}
+
+.remote{
+  padding-top: 80px
 }

@@ -22,18 +22,13 @@ app.configure(function() {
 });
 
 require("./lib/slide-reader.js")(config.directories.slides, function(slides){ 
-
 	var templateData = {
 		"packageFile": packageFile,
 		"config": config,
 		"slides": slides,
 	};
 	require("./lib/routes.js")(app, templateData);
-	
 	require("./lib/socket.js")(io, slides, config);
-
-	server.listen(config.webserver.port);
-	console.log(packageFile.name + " Server Now Running On " + config.webserver.ip + ":" + config.webserver.port + "...");
 });
 
 app.get("/template", function(req, res){
