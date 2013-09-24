@@ -41,7 +41,13 @@
 				slides.filter(":eq("+(state.currentSlide)+")").addClass("slide-next");
 				slides.filter(":gt("+(state.currentSlide)+")").addClass("slide-after");
 				
-				$(".overlay").css("display",state.blackout?"block":"none");
+				//$(".overlay").css("display",state.blackout?"block":"none");
+				if(state.blackout){
+					$('.overlay').addClass('overlay-visible');
+				}
+				else{
+					$('.overlay').removeClass('overlay-visible');
+				}
 			}
 		
 			$(document).ready(function(){
@@ -86,7 +92,7 @@
 		</script>
 	</head>
 	<body>
-		<div class="overlay" style="background-color: #000; width: 100%; height: 100%; z-index: 2000; position: absolute; margin: 0px; left: 0px; top: 0px; display: none"></div>
+		<div class="overlay"></div>
 		<div id="floater"></div>
 		<div class="slides">
 			{{#each slides}}

@@ -1,39 +1,60 @@
 @import '/css/slides.css';
 @import '/themes/knockemdown/fonts/open-sans/open-sans.css';
+@import '/themes/knockemdown/bootstrap.css';
 
 *{
 	box-sizing: border-box;
+	font-weight: lighter!important;
 }
 
 body{
-	background-color: #000;
+	background-color: #333;
 	color: #575757;
+	line-height: 2em;
+}
+
+.logo-container{
+	width: 100px;
 }
 
 .slide{
 	margin: 1px solid #AAA;
 	padding: 20px;
-	font-family: "OpenSansLight";
+	font-size: 20px;
+	line-height: 2em;
+	font-family: "OpenSansRegular";
+	box-shadow: 5px 5px 10px #222;
 }
 
 .slide h1{
-	font-size: 38.5px;
-}
-
-.slide h2{
-	font-size: 17.5px
-	color: #515151;
-}
-
-.slide h3{
-
-}
-
-.slide h1, .slide h2, .slide h3, .slide h5{
-	line-height: 40px;
+	font-size: 50px;
 }
 
 .slide h1, .slide h2, .slide h3, .slide h4{
+	line-height: 47px;
+	
+}
+
+.slide h1{
+	
+	color: #515151;
+	
+}
+
+.slide h2{
+	
+	color: #717171;
+}
+
+.slide h3{
+		color: #919191;
+}
+
+
+.slide h1, .slide h2, .slide h3, .slide h4{
 	font-family: "OpenSansRegular";
-	text-rendering: optimizelegibility;
+}
+
+.slide ul li{
+	line-height: 2em;
 }

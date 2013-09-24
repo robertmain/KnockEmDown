@@ -1,0 +1,17 @@
+@import 'none.css';
+
+.slide *{
+	opacity: 0;
+}
+
+.slide-current *{
+	opacity: 1;
+}
+
+.slide-transition *{
+	-webkit-transition: opacity 500ms ease-in-out 0ms;
+	-moz-transition: opacity 500ms ease-in-out 0ms;
+	-ms-transition: opacity 500ms ease-in-out 0ms;
+	-o-transition: opacity 500ms ease-in-out 0ms;
+	transition: opacity 500ms ease-in-out 0ms;
+}
