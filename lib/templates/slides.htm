@@ -14,12 +14,12 @@
 				overflow: hidden;
 			} 
 			.slide {
-				display: block;
-				width: 100%; 
-				height: 100%;
+			/*	display: block;
+				width: 1024px; 
+				height: 768px;
 				position:absolute;
 				top: 0px;
-				left: 0px;
+				left: 0px;*/
 			}
 		</style>
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
@@ -76,22 +76,24 @@
 					});
 				});
 				socket.on("auth_challenge",function(){
-					alert("Unhandled auth_challenge event, using hardcoded password for now");
+					console.log("Unhandled auth_challenge event, using hardcoded password for now");
 					socket.emit("auth",{"password": "1234"});
 				});
 				socket.on("auth_fail",function(){
-					alert("Unhandled auth_fail event");
+					console.log("Unhandled auth_fail event");
 				});
 			});
-			/*
-			
-			*/
 		</script>
 	</head>
 	<body>
 		<div class="overlay" style="background-color: #000; width: 100%; height: 100%; z-index: 2000; position: absolute; margin: 0px; left: 0px; top: 0px; display: none"></div>
-		{{#each slides}}
-			{{{.}}}
-		{{/each}}
+		<div id="floater"></div>
+		<div class="slides">
+			{{#each slides}}
+				{{{.}}}
+			{{/each}}
+		</div>
+		<script>
+		</script>
 	</body>
 </html>

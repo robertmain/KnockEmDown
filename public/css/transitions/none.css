@@ -1,23 +1,29 @@
 .slide {
 	transform: translate(0%,0);
+	-webkit-transform: translate(0%,0);
 }
 
 .slide-before {
 	transform: translate(-400%, 0);
+	-webkit-transform: translate(-400%, 0);
 }
 
 .slide-prev {
 	transform: translate(-200%,0);
+	-webkit-transform: translate(-200%,0);
 }
 
 .slide-current {
 	transform: translate(0,0);
+	-webkit-transform: translate(0,0);
 }
 
 .slide-next {
 	transform: translate(200%,0);
+	-webkit-transform: translate(200%, 0)
 }
 
 .slide-after {
 	transform: translate(400%,0);
+	-webkit-transform: translate(400%,0);
 }

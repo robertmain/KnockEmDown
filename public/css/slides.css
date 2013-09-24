@@ -1,45 +1,37 @@
 @import 'base.css';
-@import '../fonts/fonts.css';
+
 *{
 	margin: 0px;
 	padding: 0px;
 }
 
-body{
-	background-color: #000;
+#floater{
+	float: left;
+	height: 50%;
+	margin-bottom: -384px;
+	width: 1px;
 }
 
-h2{
-	color: #515151;
-	font-size: 45px;
-	line-height: 45px;
-	letter-spacing: -2px;
-	font-weight: 600;
-	margin-bottom: 20px;
+.slides{
+	margin: 0px auto;
+	width: 1024px;
+	position: relative;
+	clear: left;
+	height: 768px;
 }
 
-.slides > .slide{
+
+.slide{
 	display: block;
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	height: 700px;
-	width: 1100px;
-	-webkit-box-sizing: border-box;
-	box-sizing: border-box;
-	margin-top: -350px;
+	width: 1024px; 
+	height: 768px;
 	background-color: #FFF;
-	margin-left: -550px;
-	font-family: "OpenSansRegular";
-	padding: 40px 60px;
-	-webkit-border-radius: 5px;
-	border-radius: 5px;
-	color: #797979;
-	font-size: 26px;
+	position: absolute;
+	-webkit-border-radius: 4px;
 }
 
 ul li:before{
-	conent: '\00B7';
+	content: '\00B7';
 	margin-left: '-1em';
 	position: absolute;
 	font-weight: 600;

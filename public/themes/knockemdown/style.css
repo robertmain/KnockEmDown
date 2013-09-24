@@ -1,0 +1,39 @@
+@import '/css/slides.css';
+@import '/themes/knockemdown/fonts/open-sans/open-sans.css';
+
+*{
+	box-sizing: border-box;
+}
+
+body{
+	background-color: #000;
+	color: #575757;
+}
+
+.slide{
+	margin: 1px solid #AAA;
+	padding: 20px;
+	font-family: "OpenSansLight";
+}
+
+.slide h1{
+	font-size: 38.5px;
+}
+
+.slide h2{
+	font-size: 17.5px
+	color: #515151;
+}
+
+.slide h3{
+
+}
+
+.slide h1, .slide h2, .slide h3, .slide h5{
+	line-height: 40px;
+}
+
+.slide h1, .slide h2, .slide h3, .slide h4{
+	font-family: "OpenSansRegular";
+	text-rendering: optimizelegibility;
+}

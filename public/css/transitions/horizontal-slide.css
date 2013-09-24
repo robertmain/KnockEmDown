@@ -1,4 +1,5 @@
 @import './none.css';
 .slide-transition {
 	transition: transform 1s;
+	-webkit-transition: -webkit-transform 1s;
 }

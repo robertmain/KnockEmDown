@@ -7,20 +7,77 @@
 		<link href="css/remote.css" rel="stylesheet" media="screen">
 		<script src="js/jquery-2.0.3.min.js"></script>
 		<script src="js/bootstrap.min.js"></script>
+		<script src="js/moment.js"></script>
+	</head>
+
+	<body>
+		<div class="splash">
+			<p class="text-center"><i class="icon-bar-chart app-icon"></i></p>
+			<h2 class="text-center">{{packageFile.name}} v{{packageFile.version}}</h2>
+			<p class="text-center"><i class="icon-spinner icon-spin icon-3x"></i></p>
+		</div>
+		<div class="remote hide">
+			<div class="container">
+				<div class="row">
+					<div class="col-xs-12">
+						<button class="btn btn-inverse btn-blackout btn-lg btn-block" data-action="blackout">
+							<span class="icon-stack icon-2x">
+							<i class="icon-eye-open icon-2x"></i>
+							<i class="icon-ban-circle icon-stack-base text-error"></i>
+							</span>
+						</button>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<p class="text-center slide-indicator">Slide <span class="current-slide"></span> of {{slides.length}}</p>
+					</div>
+				</div>
+			</div>
+			<div class="container navbar-fixed-bottom">
+				<div class="row">
+					<div class="col-xs-6">
+						<button class="btn btn-lg btn-info  btn-block" data-action="previous"><i class="icon-arrow-left icon-2x"></i></button>
+					</div>
+					<div class="col-xs-6">
+						<button class="btn btn-lg btn-primary btn-block" data-action="next"><i class="icon-arrow-right icon-2x"></i></button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+		<div class="pincode hide">
+			<div class="container">
+				<div class="row">
+					<div class="col-xs-12">
+						<h2><i class="icon-lock"></i> Authentication Required</h2>
+						<p>This presentation is protected by a PIN. Please enter the PIN for this presentation below to continue.</p>
+						<form id="pincode-form">
+							<div class="form-group">
+								<input type="number" class="form-control input-lg" id="pincode-field" placeholder="Presentation PIN" />
+							</div>
+							<div class="form-group">
+								<button type="button" id="pincode-btn" class="btn btn-primary btn-lg btn-block">Authenticate</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
 		<script>
 			var socket;
 			setTimeout(function(){
 				socket = io.connect();
 				socket.on('auth_challenge', function(){
-					$('.splash').addClass('hide');
 					$('.pincode').removeClass('hide');
+					$('.splash').addClass('hide');
 					$('.remote').addClass('hide');
 				});
 
 				socket.on('auth_success', function(){
 					$('.splash').addClass('hide');
-					$('.pincode').removeClass('hide');
-					$('.remote').addClass('hide');
+					$('.pincode').addClass('hide');
+					$('.remote').removeClass('hide');
 
 					$(document).keyup(function(e){
 						var code = (e.keyCode ? e.keyCode : e.which);				
@@ -43,10 +100,10 @@
 					$('.splash').addClass('hide');
 					$('.remote').addClass('hide');
 					$('.pincode').removeClass('hide');
-					
-					//Go to pin screen [done]
-					//Display error [in progress]
-					//Hit Stewart [pending]
+					alert("Incorrect PIN");
+					$('#pincode-field').parent().addClass('has-error');
+					$('#pincode-field').focus();
+
 				});
 
 				socket.on('state', function(state){
@@ -57,70 +114,9 @@
 					else{
 						$('.btn-inverse').removeClass('active');
 					}
+					$("i.icon-ban-circle").css("display",state.blackout?"block":"none");
 				});
-
-			}, 500);
-		</script>
-	</head>
-
-	<body>
-		<div class="splash">
-			<h1>LOADING</h1>
-		</div>
-		<div class="remote hide">
-			<nav class="navbar navbar-inverse navbar-default navbar-fixed-top" role="navigation">
-				<div class="navbar-header">
-					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-					</button>
-					<p class="navbar-brand" href="#">{{packageFile.name}}</p>
-				</div>
-				<div class="collapse navbar-collapse navbar-ex1-collapse">
-					<form class="navbar-form navbar-left">
-						<div class="input-group">
-							<input type="number" class="form-control slide-jump-input" />
-							<span class="input-group-btn">
-								<button class="btn slide-jump-button" role="button">Go</button>
-							</span>
-						</div>
-					</form>
-				</div>
-			</nav>
-			<div class="container">
-				<div class="row">
-					<div class="col-xs-12">
-						<button class="btn btn-inverse btn-lg col-xs-12" data-action="blackout">Blackout</button>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-xs-12">
-						<p class="text-center slide-indicator">Slide <span class="current-slide"></span> of {{parsedSlides.length}}</p>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-xs-6">
-						<button class="btn btn-lg btn-warning col-xs-12" data-action="previous">Previous</button>
-					</div>
-					<div class="col-xs-6">
-						<button class="btn btn-lg btn-success col-xs-12" data-action="next">Next</button>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="pincode hide">
-			<h2>Authentication Required</h2>
-			<form>
-				<div class="form-group">
-					<input type="text" class="form-control input-lg" placeholder="Presentation Pin" />
-				</div>
-				<div class="form-group">
-					<button type="button" id="pincode-btn" class="btn btn-primary btn-lg btn-block">Submit Pin</button>
-				</div>
-			</form>
-		</div>
-		<script>
+			}, 1000);
 			$('button[data-action="next"]').click(function(){
 				socket.emit('next_slide');
 			});
@@ -133,7 +129,8 @@
 				socket.emit('toggle_blackout');
 			});
 
-			$('form').click(function(event){
+			$('form#pincode-form').submit(function(event){
+				$('#pincode-btn').trigger('click');
 				return false;
 			});
 
@@ -144,9 +141,7 @@
 			});
 
 			$('#pincode-btn').click(function(){
-				if($('#pincode-field')){
-					socket.emit('auth', {'password': $('#pincode-field').val()});
-				}
+				socket.emit('auth', {'password': $('#pincode-field').val()});
 			});
 		</script>
 	</body>

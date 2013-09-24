@@ -1,5 +1,6 @@
 @import'./bootstrap.min.css';
 @import'./bootstrap.theme.min.css';
+@import'../fonts/fonts.css';
 body{
 	color: #F5F5F5;
 	background-color: #000;
@@ -47,10 +48,41 @@ body{
   color: rgba(255, 255, 255, 0.75);
 }
 
+.btn-blackout{
+  margin-bottom: 1em;
+}
+
 .slide-indicator{
 	font-size: 3em;
 }
 
+.splash{
+  margin-top: 25%;
+}
+
+.app-icon{
+  font-size: 8em;
+  color: royalblue;
+}
+
 .remote{
-  padding-top: 80px
+  padding-top: 1em;
+}
+
+i.text-error{
+  color: #F00;
+}
+
+.icon-spinner{
+  margin-top: 20px;
+}
+
+.container:nth-of-type(2){
+  margin-bottom: 1em;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }

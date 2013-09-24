@@ -15,6 +15,6 @@ self.presentation = {
 	/* Use this to tell KnockEmDown where to find your themes */
 	"theme": "knockemdown",
 	"theme_directory": "./themes",
-	"transition": "none",
-	"control_password": "1234"
+	"transition": "horizontal-slide",
+	"control_password": 1234
 };
