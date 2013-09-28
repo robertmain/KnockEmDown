@@ -1,25 +1,47 @@
-<!-- Slide 1 -->
-{{#extend "slide-template-1.htm"}}
-	{{#replace "slide"}}
-		<h1>Heading 1</h1>
-		<h2>Heading 2</h2>
-		<h3>Heading 3</h3>
-		<h4>Heading 4</h4>
-		<h5>Heading 5</h5>
-		<h6>Heading 6</h6>
+<!--Title Slide-->
+{{#extend "title-slide.htm"}}
+	{{#replace "center-image"}}/img/node-js-logo.svg{{/replace}}
+	{{#replace "title"}}Introduction To Node.JS{{/replace}}
+	{{#replace "subtitle"}}Presented By Robert Main{{/replace}}
+{{/extend}}
+
+{{#extend "quotation.htm"}}
+	{{#replace "author-pic"}}http://nodesummit.com/events/sf2012/wp-content/uploads/ryan_dahl_joyent_headshot_black-185x185.jpg{{/replace}}
+	{{#replace "quote"}}We're Doing I/O Wrong{{/replace}}
+	{{#replace "author"}}Ryan Dahl{{/replace}}
+{{/extend}}
+
+{{#extend "two-line-slide.htm"}}
+	{{#replace "title"}}Examples{{/replace}}
+{{/extend}}
+
+{{#extend "title-with-content.htm"}}
+	{{#replace "slide-title"}}A Simple Web Server{{/replace}}
+	{{#replace "slide-content"}}
+	<h4 class="nomargin">Server Side Code</h4>
+		<pre>
+var http = require('http');
+var port = process.argv[2] || 8000;
+http.createServer(function(req, res){
+	res.writeHead(200, {"Content-Type": "text/plain"});
+	res.end("Hello World")
+}).listen(port);
+		</pre>
+	<h4 class="nomargin">Output</h4>
+<pre>
+	<h1>Hello World!</h1>
+</pre>
 	{{/replace}}
 {{/extend}}
 
-<!-- Slide 2 -->
-{{#extend "slide-template-2.htm"}}
-	{{#replace "slide"}}
-		Slide type 2
-	{{/replace}}
-{{/extend}}
+{{#extend "title-with-content.htm"}}
+	{{#replace "slide-title"}}A Simple Chat Application{{/replace}}
+	{{#replace "slide-content"}}
+	<h4 class="nomargin">Server Side Code</h4>
+<pre>
 
-<!-- Slide 3 -->
-{{#extend "slide-template-1.htm"}}
-	{{#replace "slide"}}
-		Slide type 1 again
+</pre>
+
+	<h4 class="nomargin">Client Side Code</h4>
 	{{/replace}}
 {{/extend}}
