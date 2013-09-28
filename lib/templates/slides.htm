@@ -6,26 +6,12 @@
 		<meta name="viewport" content="width=1024, user-scalable=no">
 		<title>{{ packageFile.name }} v{{ packageFile.version }}</title>
 		<link rel="stylesheet" href="{{ config.presentation.theme_directory }}/{{ config.presentation.theme }}/style.css" />
+		<link type="text/css" rel="Stylesheet" href="{{config.presentation.theme_directory}}/{{config.presentation.theme}}/prettify.css" />
 		<link rel="stylesheet" href="css/transitions/{{ config.presentation.transition }}.css" />
-		<style type="text/css">
-			html, body { 
-				width: 100%;
-				height: 100%;
-				overflow: hidden;
-			} 
-			.slide {
-			/*	display: block;
-				width: 1024px; 
-				height: 768px;
-				position:absolute;
-				top: 0px;
-				left: 0px;*/
-			}
-		</style>
-		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+		<script src="/js/jquery-2.0.3.min.js"></script>
+		<script src="/js/prettify/prettify.js" type="text/javascript"></script>
 		<script src="/socket.io/socket.io.js"></script>
 		<script type="text/javascript">
-		
 			var state = {
 				"numSlides": 0,
 				"currentSlide": 1,
@@ -33,6 +19,7 @@
 			};
 			function updateSlides(){
 				var slides = $(".slide");
+
 				slides.removeClass("slide-before slide-prev slide-current slide-next slide-after");
 				
 				slides.filter(":lt("+(state.currentSlide-2)+")").addClass("slide-before");
@@ -41,23 +28,27 @@
 				slides.filter(":eq("+(state.currentSlide)+")").addClass("slide-next");
 				slides.filter(":gt("+(state.currentSlide)+")").addClass("slide-after");
 				
-				//$(".overlay").css("display",state.blackout?"block":"none");
 				if(state.blackout){
-					$('.overlay').addClass('overlay-visible');
+					$('.slides').addClass('slide-hide');
 				}
 				else{
-					$('.overlay').removeClass('overlay-visible');
+					$('.slides').removeClass('slide-hide');
 				}
 			}
 		
 			$(document).ready(function(){
 				state.numSlides = $(".slide").size();
 				updateSlides();
-				setTimeout(function(){$(".slide").addClass("slide-transition");},1);
+				setTimeout(function(){$(".slides, .slide").addClass("slide-transition");},1);
 				var socket = io.connect();
 				socket.on("state",function(newState){
-					state = newState;
-					updateSlides();
+					// if($('.slide-current').contains('.fragment')){
+					// 	alert("this slide has fragments!");
+					// }
+					// else{
+						state = newState;
+						updateSlides();
+					//}
 				});
 				socket.on("auth_success",function(){
 					$(document).keydown(function(e){
@@ -82,24 +73,29 @@
 					});
 				});
 				socket.on("auth_challenge",function(){
-					console.log("Unhandled auth_challenge event, using hardcoded password for now");
+					//console.log("Unhandled auth_challenge event, using hardcoded password for now");
 					socket.emit("auth",{"password": "1234"});
 				});
 				socket.on("auth_fail",function(){
-					console.log("Unhandled auth_fail event");
+					//console.log("Unhandled auth_fail event");
 				});
+				$('pre').each(function(val, idx){
+					$(this).text($.trim($(this).html()));
+					$(this).addClass('prettyprint linenums');
+				});
+				prettyPrint();
 			});
 		</script>
 	</head>
 	<body>
-		<div class="overlay"></div>
 		<div id="floater"></div>
 		<div class="slides">
+			<div class="logo-container">
+				<div style="background-image: url('/img/node-logo.svg'); background-position: -3px -3px; width: 50px; height: 50px; background-color: #FFF; right: 12px; top: 12px; position: absolute; background-size: 120px; border-radius: 5px"></div>
+			</div>
 			{{#each slides}}
 				{{{.}}}
 			{{/each}}
 		</div>
-		<script>
-		</script>
 	</body>
 </html>

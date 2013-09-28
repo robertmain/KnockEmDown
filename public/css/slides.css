@@ -5,28 +5,26 @@
 	padding: 0px;
 }
 
-.overlay{
-	opacity: 0;
-	background-color: #333;
+html, body{
 	width: 100%;
 	height: 100%;
-	z-index: 2000;
-	position: absolute;
-	margin: 0px;
-	left: 0px;
-	top: 0px;
-	-webkit-transition: opacity 500ms ease-in-out;
-	   -moz-transition: opacity 500ms ease-in-out;
-		 -o-transition: opacity 500ms ease-in-out;
-			transition: opacity 500ms ease-in-out;
-}
-
-.overlay-visible{
-	opacity: 1;
+	overflow: hidden;
 }
 
 body{
 	background-color: #333;
+}
+
+.logo-container{
+	overflow: hidden;
+	position: absolute;
+	background-color: #AAA;
+	bottom: 80px;
+	right: 0px;
+	width: 75px;
+	height: 75px;
+	border-top-left-radius: 5px;
+	border-bottom-left-radius: 5px;
 }
 
 #floater{
@@ -42,16 +40,22 @@ body{
 	position: relative;
 	clear: left;
 	height: 768px;
+	opacity: 1;
+	-webkit-transition: opacity 500ms ease-in-out;
+	-moz-transition: opacity 500ms ease-in-out;
+	-o-transition: opacity 500ms ease-in-out;
+	transition: opacity 500ms ease-in-out;
 }
 
 .slide{
 	display: block;
 	width: 1024px; 
 	height: 768px;
-	background-color: #FFF;
 	position: absolute;
-	-webkit-border-radius: 5px;
-	border-radius: 5px;
+}
+
+.slide-hide{
+	opacity: 0;
 }
 
 .slides > .slide ul{

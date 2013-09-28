@@ -1,0 +1,40 @@
+<section class="slide quotation-slide">
+	<style type="text/css">
+		.quotation-slide h1{
+			margin-top: 0px;
+			line-height: 80px;
+			font-size: 70px;
+		}
+		.quotation-slide h1:before{
+			content: open-quote;
+		}
+
+		.quotation-slide h1:after{
+			content: close-quote;
+		}
+
+		.quotation-slide h2{
+			font-size: 48px;
+		}
+
+		.quotation-slide h1, .quotation-slide h2{
+			line-height: normal;
+		}
+
+		.quotation-slide-middle{
+			margin-top: 25%;
+		}
+
+	</style>
+	<div class="quotation-slide-middle">
+		<div class="row-fluid">
+			<div class="span2">
+				<img src="{{#block "author-pic"}}{{/block}}" />
+			</div>
+			<div class="span10">
+				<h1>{{#block "quote"}}{{/block}}</h1>
+				<h2 class="muted">&mdash;{{#block "author"}}{{/block}}</h2>
+			</div>
+		</div>
+	</div>
+</section>

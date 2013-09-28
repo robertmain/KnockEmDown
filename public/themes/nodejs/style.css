@@ -1,0 +1,71 @@
+@import '/css/slides.css';
+@import '/fonts/open-sans/open-sans.css';
+@import '/css/bootstrap-2.css';
+
+*{
+	box-sizing: border-box;
+	font-weight: lighter!important;
+}
+
+.nomargin{
+	margin: 0px;
+}
+
+.nopadding{
+	padding: 0px;
+}
+
+body{
+	background-color: #333;
+	color: #575757;
+	line-height: 2em;
+}
+
+.slides, .slide{
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	-o-border-radius: 5px;
+	border-radius: 5px;
+}
+
+.slides{
+	background-color: #FFF;
+}
+
+.slide{
+	margin: 1px solid #AAA;
+	padding: 20px;
+	font-size: 20px;
+	line-height: 2em;
+	font-family: "OpenSansRegular";
+	box-shadow: 5px 5px 10px #222;
+}
+
+.slide h1{
+	font-size: 50px;
+}
+
+.slide h1, .slide h2, .slide h3, .slide h4{
+	line-height: 47px;
+}
+
+.slide h1{
+	color: #515151;
+}
+
+.slide h2{
+	color: #717171;
+}
+
+.slide h3{
+	color: #919191;
+}
+
+.slide h1, .slide h2, .slide h3, .slide h4{
+	font-family: "OpenSansRegular";
+}
+
+.slide ul li{
+	line-height: 2em;
+	font-size: 30px;
+}

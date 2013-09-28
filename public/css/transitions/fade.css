@@ -1,17 +1,22 @@
-@import 'none.css';
-
-.slide *{
+.slide{
 	opacity: 0;
 }
 
-.slide-current *{
+.slide-current{
 	opacity: 1;
 }
 
-.slide-transition *{
+.slide-transition{
 	-webkit-transition: opacity 500ms ease-in-out 0ms;
 	-moz-transition: opacity 500ms ease-in-out 0ms;
 	-ms-transition: opacity 500ms ease-in-out 0ms;
 	-o-transition: opacity 500ms ease-in-out 0ms;
 	transition: opacity 500ms ease-in-out 0ms;
+}
+
+.slide-after, .slide-next{
+	transition: transform 0s 0.5s, opacity 0.5s 0s!important;
+	-webkit-transition: -webkit-transform 0s 0.5s, opacity 0.5s 0s!important;
+	-webkit-transform: translateX(-100%);
+	transform: translateX(-100%);
 }
