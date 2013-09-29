@@ -14,14 +14,16 @@
 				height: 100%;
 				overflow: hidden;
 			} 
-			.slide, .slides {
+			.slides {
 				transform-origin: top left;
 				-webkit-transform-origin: top left;
-			}
-
-			.slides {
+			
 				width: 1024px; 
 				height: 768px;
+			}
+
+			.slides-positioning {
+				margin: 0 auto;
 			}
 		</style>
 		<script src="/js/jquery-2.0.3.min.js"></script>
@@ -103,27 +105,30 @@
 				prettyPrint();
 				$(window).resize();
 			});
-
 			$(window).resize(function(){
 				var scaleW = $(window).innerWidth() / $(".slides").innerWidth();
 				var scaleH = $(window).innerHeight() / $(".slides").innerHeight();
 				var scale = Math.min(scaleW, scaleH);
-				$(".slides").css({"transform":"scale("+scale+")","-webkit-transform":"scale("+scale+")"})
+				$(".slides").css({"transform":"scale("+scale+")","-webkit-transform":"scale("+scale+")"});
+				$(".slides-positioning").css({"width": $(".slides").innerWidth()*scale, "height": $(".slides").innerHeight()*scale});
+				$("#floater").css("margin-bottom", -$(".slides").innerHeight() * scale * 0.5);
 			});
 		</script>
 	</head>
 	<body>
 		<div id="floater"></div>
-		<div class="slides">
-			<div class="logo-container">
-				<div style="background-image: url('/img/node-logo.svg'); background-position: -3px -3px; width: 50px; height: 50px; background-color: #FFF; right: 12px; top: 12px; position: absolute; background-size: 120px; border-radius: 5px"></div>
+		<div class="slides-positioning">
+			<div class="slides">
+				<div class="logo-container">
+					<div style="background-image: url('/img/node-logo.svg'); background-position: -3px -3px; width: 50px; height: 50px; background-color: #FFF; right: 12px; top: 12px; position: absolute; background-size: 120px; border-radius: 5px"></div>
+				</div>
+				{{#each slides}}
+					{{{.}}}
+				{{/each}}
+				<h4 class="muted" style="position: absolute; bottom: 10px; right: 10px">
+					<span id="currentSlide"></span>/<span id="numSlides"></span>
+				</h4>
 			</div>
-			{{#each slides}}
-				{{{.}}}
-			{{/each}}
-			<h4 class="muted" style="position: absolute; bottom: 10px; right: 10px">
-				<span id="currentSlide"></span>/<span id="numSlides"></span>
-			</h4>
 		</div>
 	</body>
 </html>
