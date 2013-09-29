@@ -1,5 +1,6 @@
 @import '/css/slides.css';
 @import '/fonts/open-sans/open-sans.css';
+@import '/fonts/font-awesome/font-awesome.css';
 @import '/css/bootstrap-2.css';
 
 *{
@@ -68,4 +69,8 @@ body{
 .slide ul li{
 	line-height: 2em;
 	font-size: 30px;
+}
+
+[class^="icon-"], [class*=" icon-"]{
+	line-height: normal;
 }

@@ -5,43 +5,147 @@
 	{{#replace "subtitle"}}Presented By Robert Main{{/replace}}
 {{/extend}}
 
-{{#extend "quotation.htm"}}
-	{{#replace "author-pic"}}http://nodesummit.com/events/sf2012/wp-content/uploads/ryan_dahl_joyent_headshot_black-185x185.jpg{{/replace}}
-	{{#replace "quote"}}We're Doing I/O Wrong{{/replace}}
-	{{#replace "author"}}Ryan Dahl{{/replace}}
-{{/extend}}
 
-{{#extend "two-line-slide.htm"}}
-	{{#replace "title"}}Examples{{/replace}}
+{{#extend "title-with-content.htm"}}
+	{{#replace "slide-title"}}What Is Node.JS?{{/replace}}
+	{{#replace "slide-content"}}
+	<ul>
+		<li>
+			A Platform For Running JavaScript Applications
+			<ul>
+				<li>Made By Ryan Dahl</li>
+				<li>Non-Blocking I/O</li>
+				<li>Single Threaded</li>
+			</ul>
+		</li>
+		<li>Based on V8 The JavaScript Engine Behind Google Chrome</li>
+	</ul>
+	{{/replace}}
 {{/extend}}
 
 {{#extend "title-with-content.htm"}}
-	{{#replace "slide-title"}}A Simple Web Server{{/replace}}
+	{{#replace "slide-title"}}Module System{{/replace}}
+	{{#replace "slide-content"}}
+	<ul>
+		<li>Each JS file exists in isolation, explicity exports public APIs</li>
+		<li>One file includes another file or libary using require()</li>
+		<li>A library is one or more files packages up with a name and a dependency list</li>
+		<li>Management of dependency list and versions through package.json</li>
+	</ul>
+	{{/replace}}
+{{/extend}}
+
+
+{{#extend "two-line-slide.htm"}}
+	{{#replace "slide-title"}}Third Party Libraries{{/replace}}
+{{/extend}}
+
+
+{{#extend "title-with-content.htm"}}
+	{{#replace "slide-title"}}npm{{/replace}}
+	{{#replace "slide-content"}}
+	<ul>
+		<li>Is the node package manager</li>
+		<li>Extensive catalog of libraries for nearly every purpose</li>
+		<li>Automatic handling of dependencies, and compilation where neccecary</li>
+	</ul>
+	{{/replace}}
+{{/extend}}
+
+
+{{#extend "title-with-content.htm"}}
+	{{#replace "slide-title"}}Controlling Hardware With Node{{/replace}}
+	{{#replace "slide-content"}}
+		<ul>
+			<li>Can create native C++ code modules for Node.JS</li>
+			<li>Modules such as RPIO (http://npmjs.org/package/rpio) can use this for a variety of things including RPi GPIO</li>
+		</ul>
+	{{/replace}}
+{{/extend}}
+
+{{#extend "title-with-content.htm"}}
+	{{#replace "slide-title"}}Node.JS + LCD Display{{/replace}}
+	{{#replace "slide-content"}}
+	<iframe width="100%" height="490" src="//www.youtube.com/embed/oGhEU539_7I?html5=1" frameborder="0" allowfullscreen></iframe>
+	{{/replace}}
+{{/extend}}
+
+
+{{#extend "two-line-slide.htm"}}
+	{{#replace "slide-title"}}Node On The Web{{/replace}}
+	{{#replace "slide-subtitle"}}And Other Cool Things{{/replace}}
+{{/extend}}
+
+
+{{#extend "iframe-with-title.htm"}}
+	{{#replace "slide-title"}}Trello{{/replace}}
+	{{#replace "url"}}http://trello.com{{/replace}}
+{{/extend}}
+
+
+{{#extend "title-with-content.htm"}}
+	{{#replace "slide-title"}}Hello World Web Server{{/replace}}
 	{{#replace "slide-content"}}
 	<h4 class="nomargin">Server Side Code</h4>
-		<pre>
-var http = require('http');
+		<pre>var http = require('http');
 var port = process.argv[2] || 8000;
 http.createServer(function(req, res){
 	res.writeHead(200, {"Content-Type": "text/plain"});
 	res.end("Hello World")
-}).listen(port);
-		</pre>
+}).listen(port);</pre>
 	<h4 class="nomargin">Output</h4>
+<pre>"Hello World"</pre>
+	{{/replace}}
+{{/extend}}
+
+
+{{#extend "title-with-content.htm"}}
+	{{#replace "slide-title"}}Hello World TCP Server{{/replace}}
+	{{#replace "slide-content"}}
+	<h4 class="nomargin">Server Side Code</h4>
 <pre>
-	<h1>Hello World!</h1>
+var net = require('net');
+var server = net.createServer(function(socket){
+	socket.on('data', function(){
+		socket.write('Hello World\n');
+	});
+}).listen(9000);
+</pre>
+<h4 class="nomargin">Output</h4>
+<pre>"Hello World"</pre>
+	{{/replace}}
+{{/extend}}
+
+
+{{#extend "title-with-content.htm"}}
+	{{#replace "slide-title"}}TCP Chat Server{{/replace}}
+	{{#replace "slide-content"}}
+<pre>
+var net = require('net');
+var sockets = [];
+var server = net.createServer(function(socket){
+	sockets.push(socket);
+	socket.on('data', function(data){
+		for(var i=0; i&lt;sockets.length; i++){
+			if(sockets[i] != socket){	
+				sockets[i].write(data);
+			}
+		}
+	});
+	socket.on('end', function(){
+		var i = sockets.indexOf(socket)
+		sockets.splice(i, -1);
+	});
+}).listen(9000);
 </pre>
 	{{/replace}}
 {{/extend}}
 
 {{#extend "title-with-content.htm"}}
-	{{#replace "slide-title"}}A Simple Chat Application{{/replace}}
+	{{#replace "slide-title"}}Downloads{{/replace}}
 	{{#replace "slide-content"}}
-	<h4 class="nomargin">Server Side Code</h4>
-<pre>
-
-</pre>
-
-	<h4 class="nomargin">Client Side Code</h4>
+	<div class="row-fluid">
+		<i class="icon-comment pull-left"></i> Applications
+	</div>
 	{{/replace}}
 {{/extend}}
