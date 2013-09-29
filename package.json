@@ -10,7 +10,9 @@
     "handlebars": "~1.0.12",
     "express": "~3.4.0",
     "socket.io": "~0.9.16",
-    "jsdom-nogyp": "~0.8.3"
+    "jsdom-nogyp": "~0.8.3",
+    "ip": "https://github.com/indutny/node-ip/archive/master.tar.gz",
+    "open": "0.0.4"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

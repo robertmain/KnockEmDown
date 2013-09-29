@@ -1,10 +1,12 @@
 var express = require('express'),
 	config = require('./config/config.js'),
+	ip = require('ip'),
+	fs = require('fs'),
 	app = express(),
 	packageFile = require('./package.json'),
-	fs = require('fs'),
 	server = require('http').createServer(app),
 	io = require('socket.io').listen(server),
+	open = require('open'),
 	handlebars = require('handlebars');
 
 require('handlebars-layouts')(handlebars);
@@ -26,6 +28,7 @@ require("./lib/slide-reader.js")(config.directories.slides, function(slides){
 		"packageFile": packageFile,
 		"config": config,
 		"slides": slides,
+		"ip": ip.address()
 	};
 	require("./lib/routes.js")(app, templateData);
 	require("./lib/socket.js")(io, slides, config);
@@ -36,4 +39,5 @@ app.get("/template", function(req, res){
 });
 
 server.listen(config.webserver.port);
-console.log(packageFile.name + " Server Now Running On " + config.webserver.ip + ":" + config.webserver.port + "...");
+console.log(packageFile.name + " Server Now Running On " + ip.address() + ":" + config.webserver.port + "...");
+open("http://localhost:" + config.webserver.port, 'chrome');

@@ -21,13 +21,14 @@
 				var slides = $(".slide");
 
 				slides.removeClass("slide-before slide-prev slide-current slide-next slide-after");
-				
+
 				slides.filter(":lt("+(state.currentSlide-2)+")").addClass("slide-before");
 				slides.filter(":eq("+(state.currentSlide-2)+")").addClass("slide-prev");
 				slides.filter(":eq("+(state.currentSlide-1)+")").addClass("slide-current");
 				slides.filter(":eq("+(state.currentSlide)+")").addClass("slide-next");
 				slides.filter(":gt("+(state.currentSlide)+")").addClass("slide-after");
-				
+				$('span#currentSlide').text(state.currentSlide);
+				$('span#numSlides').text(state.numSlides);
 				if(state.blackout){
 					$('.slides').addClass('slide-hide');
 				}
@@ -35,20 +36,20 @@
 					$('.slides').removeClass('slide-hide');
 				}
 			}
-		
+
 			$(document).ready(function(){
 				state.numSlides = $(".slide").size();
 				updateSlides();
 				setTimeout(function(){$(".slides, .slide").addClass("slide-transition");},1);
 				var socket = io.connect();
 				socket.on("state",function(newState){
-					// if($('.slide-current').contains('.fragment')){
-					// 	alert("this slide has fragments!");
-					// }
-					// else{
-						state = newState;
-						updateSlides();
-					//}
+					state = newState;
+					updateSlides();
+					var pageTitle = $('title').text();
+					if(state.blackout){
+
+						$('title').text()
+					}
 				});
 				socket.on("auth_success",function(){
 					$(document).keydown(function(e){
@@ -96,6 +97,9 @@
 			{{#each slides}}
 				{{{.}}}
 			{{/each}}
+			<h4 class="muted" style="position: absolute; bottom: 10px; right: 10px">
+				<span id="currentSlide"></span>/<span id="numSlides"></span>
+			</h4>
 		</div>
 	</body>
 </html>
