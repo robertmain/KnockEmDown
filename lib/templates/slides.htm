@@ -8,6 +8,7 @@
 		<link rel="stylesheet" href="{{ config.presentation.theme_directory }}/{{ config.presentation.theme }}/style.css" />
 		<link type="text/css" rel="Stylesheet" href="{{config.presentation.theme_directory}}/{{config.presentation.theme}}/prettify.css" />
 		<link rel="stylesheet" href="css/transitions/{{ config.presentation.transition }}.css" />
+		<link rel="stylesheet" href="css/fragment-transitions/{{ config.presentation.fragment_transition }}.css" />
 		<style type="text/css">
 			html, body { 
 				width: 100%;
@@ -32,19 +33,29 @@
 		<script type="text/javascript">
 			var state = {
 				"numSlides": 0,
+				"numFragments": [],
 				"currentSlide": 1,
-				"blackout": false,
+				"currentFragment": 0,
+				"blackout": false
 			};
+
 			function updateSlides(){
+				$(".slide-fragment").removeClass("fragment-next fragment-after");
 				var slides = $(".slide");
-
 				slides.removeClass("slide-before slide-prev slide-current slide-next slide-after");
-
-				slides.filter(":lt("+(state.currentSlide-2)+")").addClass("slide-before");
-				slides.filter(":eq("+(state.currentSlide-2)+")").addClass("slide-prev");
+				if(state.currentSlide > 2)
+					slides.filter(":lt("+(state.currentSlide-2)+")").addClass("slide-before");
+				if(state.currentSlide >= 2)
+					slides.filter(":eq("+(state.currentSlide-2)+")").addClass("slide-prev");
 				slides.filter(":eq("+(state.currentSlide-1)+")").addClass("slide-current");
-				slides.filter(":eq("+(state.currentSlide)+")").addClass("slide-next");
-				slides.filter(":gt("+(state.currentSlide)+")").addClass("slide-after");
+				slides.filter(":eq("+(state.currentSlide)+")").addClass("slide-next").find(".slide-fragment").addClass("fragment-after");
+				slides.filter(":gt("+(state.currentSlide)+")").addClass("slide-after").find(".slide-fragment").addClass("fragment-after");
+				
+				var frags = $(".slide-current .slide-fragment");
+				frags.filter(":eq("+(state.currentFragment)+")").addClass("fragment-next");
+				frags.filter(":gt("+(state.currentFragment)+")").addClass("fragment-after");
+
+
 				$('span#currentSlide').text(state.currentSlide);
 				$('span#numSlides').text(state.numSlides);
 				if(state.blackout){
@@ -55,21 +66,15 @@
 				}
 			}
 
-			$(document).ready(function(){
-				state.numSlides = $(".slide").size();
-				updateSlides();
-				setTimeout(function(){$(".slides, .slide").addClass("slide-transition");},1);
-				var socket = io.connect();
-				socket.on("state",function(newState){
-					state = newState;
-					updateSlides();
-					var pageTitle = $('title').text();
-					if(state.blackout){
+			var socket;
 
-						$('title').text()
-					}
-				});
-				socket.on("auth_success",function(){
+
+			var bindEvents = (function(){
+				var eventsBound = false;
+				return function(){
+					if(eventsBound)
+						return;
+					eventsBound = true;
 					$(document).keydown(function(e){
 						//Next Slide
 						if(e.which == 39){
@@ -90,6 +95,24 @@
 							e.stopPropagation();
 						}
 					});
+				};
+			})();
+
+			$(document).ready(function(){
+				state.numSlides = $(".slide").size();
+				updateSlides();
+				setTimeout(function(){$(".slides, .slide").addClass("slide-transition");},1);
+				socket = io.connect();
+				socket.on("state",function(newState){
+					state = newState;
+					updateSlides();
+					var pageTitle = $('title').text();
+					if(state.blackout){
+						$('title').text("");
+					}
+				});
+				socket.on("auth_success",function(){
+					bindEvents();
 				});
 				socket.on("auth_challenge",function(){
 					//console.log("Unhandled auth_challenge event, using hardcoded password for now");
@@ -98,10 +121,7 @@
 				socket.on("auth_fail",function(){
 					//console.log("Unhandled auth_fail event");
 				});
-				$('pre').each(function(val, idx){
-					$(this).text($.trim($(this).html()));
-					$(this).addClass('prettyprint linenums');
-				});
+				$('pre').addClass('prettyprint linenums');
 				prettyPrint();
 				$(window).resize();
 			});

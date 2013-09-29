@@ -16,5 +16,6 @@ self.presentation = {
 	"theme": "nodejs",
 	"theme_directory": "./themes",
 	"transition": "fade",
+	"fragment_transition": "fade",
 	"control_password": 1234
 };
