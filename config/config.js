@@ -12,9 +12,10 @@ self.webserver = {
 };
 
 self.presentation = {
-	/* Use this to tell KnockEmDown where to find your themes */
 	"theme": "nodejs",
 	"theme_directory": "./themes",
 	"transition": "fade",
-	"control_password": 1234
+	"fragment_transition": "fade",
+	"control_password": 1234,
+	"allow_control_from_slides": true
 };

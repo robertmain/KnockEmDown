@@ -27,7 +27,8 @@ require("./lib/slide-reader.js")(config.directories.slides, function(slides){
 	var templateData = {
 		"packageFile": packageFile,
 		"config": config,
-		"slides": slides,
+		"slides": slides.slides,
+		"fragments": slides.fragments,
 		"ip": ip.address()
 	};
 	require("./lib/routes.js")(app, templateData);
