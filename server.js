@@ -28,8 +28,7 @@ require("./lib/slide-reader.js")(config.directories.slides, function(slides){
 		"packageFile": packageFile,
 		"config": config,
 		"slides": slides.slides,
-		"fragments": slides.fragments,
-		"ip": ip.address()
+		"fragments": slides.fragments
 	};
 	require("./lib/routes.js")(app, templateData);
 	require("./lib/socket.js")(io, slides, config);

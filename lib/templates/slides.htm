@@ -56,9 +56,6 @@
 				frags.filter(":eq("+(state.currentFragment)+")").addClass("fragment-next");
 				frags.filter(":gt("+(state.currentFragment)+")").addClass("fragment-after");
 
-if(frags.size()){
-	console.log("Fragment");
-}
 				$('span#currentSlide').text(state.currentSlide);
 				$('span#numSlides').text(state.numSlides);
 				if(state.blackout){

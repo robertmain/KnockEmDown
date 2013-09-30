@@ -10,15 +10,15 @@
 	{{#replace "slide-title"}}What Is Node.JS?{{/replace}}
 	{{#replace "slide-content"}}
 	<ul>
-		<li>
+		<li class="slide-fragment">
 			A Platform For Running JavaScript Applications
 			<ul>
-				<li>Made By Ryan Dahl</li>
-				<li>Non-Blocking I/O</li>
-				<li>Single Threaded</li>
+				<li class="slide-fragment">Made By Ryan Dahl</li>
+				<li class="slide-fragment">Non-Blocking I/O</li>
+				<li class="slide-fragment">Single Threaded</li>
 			</ul>
 		</li>
-		<li>Based on V8 The JavaScript Engine Behind Google Chrome</li>
+		<li class="slide-fragment">Based on V8 The JavaScript Engine Behind Google Chrome</li>
 	</ul>
 	{{/replace}}
 {{/extend}}
@@ -27,10 +27,10 @@
 	{{#replace "slide-title"}}Module System{{/replace}}
 	{{#replace "slide-content"}}
 	<ul>
-		<li>Each JS file exists in isolation, explicity exports public APIs</li>
-		<li>One file includes another file or libary using require()</li>
-		<li>A library is one or more files packages up with a name and a dependency list</li>
-		<li>Management of dependency list and versions through package.json</li>
+		<li class="slide-fragment">Each JS file exists in isolation, explicity exports public APIs</li>
+		<li class="slide-fragment">One file includes another file or libary using require()</li>
+		<li class="slide-fragment">A library is one or more files packages up with a name and a dependency list</li>
+		<li class="slide-fragment">Management of dependency list and versions through package.json</li>
 	</ul>
 	{{/replace}}
 {{/extend}}
@@ -45,9 +45,9 @@
 	{{#replace "slide-title"}}npm{{/replace}}
 	{{#replace "slide-content"}}
 	<ul>
-		<li>Is the node package manager</li>
-		<li>Extensive catalog of libraries for nearly every purpose</li>
-		<li>Automatic handling of dependencies, and compilation where neccecary</li>
+		<li class="slide-fragment">Is the node package manager</li>
+		<li class="slide-fragment">Extensive catalog of libraries for nearly every purpose</li>
+		<li class="slide-fragment">Automatic handling of dependencies, and compilation where neccecary</li>
 	</ul>
 	{{/replace}}
 {{/extend}}
@@ -57,8 +57,8 @@
 	{{#replace "slide-title"}}Controlling Hardware With Node{{/replace}}
 	{{#replace "slide-content"}}
 		<ul>
-			<li>Can create native C++ code modules for Node.JS</li>
-			<li>Modules such as RPIO (http://npmjs.org/package/rpio) can use this for a variety of things including RPi GPIO</li>
+			<li class="slide-fragment">Can create native C++ code modules for Node.JS</li>
+			<li class="slide-fragment">Modules such as RPIO (http://npmjs.org/package/rpio) can use this for a variety of things including RPi GPIO</li>
 		</ul>
 	{{/replace}}
 {{/extend}}
@@ -83,6 +83,11 @@
 {{/extend}}
 
 
+{{#extend "two-line-slide.htm"}}
+	{{#replace "slide-title"}}{{ip}}{{/replace}}
+{{/extend}}
+
+
 {{#extend "title-with-content.htm"}}
 	{{#replace "slide-title"}}Hello World Web Server{{/replace}}
 	{{#replace "slide-content"}}
@@ -94,7 +99,7 @@ http.createServer(function(req, res){
 	res.end("Hello World")
 }).listen(port);</pre>
 	<h4 class="nomargin">Output</h4>
-<pre>"Hello World"</pre>
+<pre class="slide-fragment">"Hello World"</pre>
 	{{/replace}}
 {{/extend}}
 
@@ -112,7 +117,7 @@ var server = net.createServer(function(socket){
 }).listen(9000);
 </pre>
 <h4 class="nomargin">Output</h4>
-<pre>"Hello World"</pre>
+<pre class="slide-fragment">"Hello World"</pre>
 	{{/replace}}
 {{/extend}}
 
