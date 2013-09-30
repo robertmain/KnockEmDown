@@ -1,12 +1,5 @@
+@import './none.css';
 .slide-transition .slide-fragment {
 	transition: opacity 1s;
 	-webkit-transition: opacity 1s;
-}
-
-.slide-fragment {
-	opacity: 1;
-}
-
-.slide-fragment.fragment-after, .slide-fragment.fragment-next {
-	opacity: 0;
 }
