@@ -5,9 +5,9 @@
   "main": "server.js",
   "dependencies": {
     "consolidate": "~0.9.1",
-    "marked": "~0.2.9",
+    "marked": "~0.3.4",
     "handlebars-layouts": "~0.1.1",
-    "handlebars": "~1.0.12",
+    "handlebars": "~4.0.0",
     "express": "~3.4.0",
     "socket.io": "~0.9.16",
     "jsdom-nogyp": "~0.8.3",
